@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Creneau {
+struct Creneau : Codable{
     var id: Int
     var horaire_debut: String
     var horaire_fin: String

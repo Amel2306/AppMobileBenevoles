@@ -8,9 +8,9 @@
 import Foundation
 import CoreData
 
-struct CreneauEspace {
-    let nbBenevolesMax: Int
-    let creneaux : Creneau
-    let zonebenevoles: Zonebenevole
+struct CreneauEspace : Codable {
+    let nb_benevoles_max: Int
+    let creneauId : Int
+    let zonebenevoleId: Int
     
 }

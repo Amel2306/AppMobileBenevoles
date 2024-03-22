@@ -37,10 +37,13 @@ import SwiftUI
         @Published var selectedMoment = "Journée"
         @Published var selectedActivity: String = "Toutes"
         @Published var isNextButtonEnabled = false
+        @Published var posts: [Post] = []
+        @Published var horaires : [Creneau] = []
+        @Published var isPostsFetched = false
+        @Published var isHorairesFetched = false
+        @Published var tabPostHoraire = [Int: [[DemanderActivite]]]()
+
         
-        @State private var posts : [Post] = []
-        @State private var horaires = [Creneau]()
-        @State private var tabPostHoraire = [Int: [[DemanderActivite]]]()
         @State private var tabPostNbMax = [Int: [Int: Int]]()
         @State private var selectedSlot = [(Int, Int)]()
         @State private var chooseJeuZone = false
@@ -54,57 +57,166 @@ import SwiftUI
                 self.fetchPosts()
                 self.fetchHoraires()
                 self.fetchData()
-                self.fetchData2()
+                self.fetchData1()
             }
         }
         
         func fetchPosts() {
-                guard let url = URL(string: "https://appbenevoleamelines.cluster-ig4.igpolytech.fr/api/post") else {
-                    print("Invalid URL")
+            guard let url = URL(string: "https://appbenevoleamelines.cluster-ig4.igpolytech.fr/api/post") else {
+                print("Invalid URL")
+                return
+            }
+            
+            URLSession.shared.dataTask(with: url) { data, response, error in
+                guard let data = data else {
+                    print("No data")
                     return
                 }
-
-                let task = URLSession.shared.dataTask(with: url) { data, response, error in
-                    if let error = error {
-                        print("Error: \(error)")
-                        return
-                    }
-
-                    guard let httpResponse = response as? HTTPURLResponse,
-                          (200...299).contains(httpResponse.statusCode) else {
-                        print("Server error")
-                        return
-                    }
-
-                    if let data = data {
-                        do {
-                            let decodedData = try JSONDecoder().decode([Post].self, from: data)
-                            DispatchQueue.main.async {
-                                print(data)
-                                print(decodedData)
-                                self.posts = decodedData
-                                print("////" , self.posts)
-                            }
-                            
-                        } catch {
-                            print("Error decoding JSON: \(error)")
-                        }
-                    }
+                
+                do {
+                    let decoder = JSONDecoder()
+                    self.posts = try decoder.decode([Post].self, from: data)
+                    self.isPostsFetched = true
+                    print(self.isPostsFetched)
+                    print("POOOOOSTS" ,self.posts)
+                } catch {
+                    print("Error decoding JSON: \(error)")
                 }
-                task.resume()
-            }
+            }.resume()
+        }
 
         func fetchHoraires() {
-            // Appeler votre API pour récupérer les créneaux horaires
-            // Mettre à jour la variable 'horaires' avec les données récupérées
+            guard let url = URL(string: "https://appbenevoleamelines.cluster-ig4.igpolytech.fr/api/creneaux") else {
+                print("Invalid URL")
+                return
+            }
+            
+            URLSession.shared.dataTask(with: url) { data, response, error in
+                guard let data = data else {
+                    print("No data")
+                    return
+                }
+                
+                do {
+                    let decoder = JSONDecoder()
+                    self.horaires = try decoder.decode([Creneau].self, from: data)
+                    self.isHorairesFetched = true
+                    print("CREEENEAU", self.horaires)
+                } catch {
+                    print("Error decoding JSON: \(error)")
+                }
+            }.resume()
         }
 
         func fetchData() {
-            // Logique pour récupérer les données de demande par horaire et post
+            var updatedTabPH = [Int: [[DemanderActivite]]]()
+            
+            // Vérifiez si les données des posts et des horaires ont été récupérées avec succès
+            guard isPostsFetched && isHorairesFetched else {
+                print("Posts or horaires data not fetched yet")
+                return
+            }
+
+            // Boucle à travers chaque post pour récupérer les données de demande
+            for post in posts {
+                var tabH = [[DemanderActivite]]() // Déclaration de tabH à l'extérieur de la boucle horaire
+                // Boucle à travers chaque horaire pour récupérer les données de demande
+                for horaire in horaires {
+
+                    let url = URL(string: "https://appbenevoleamelines.cluster-ig4.igpolytech.fr/api/demanderactivtie/postCreneau/\(post.id)/\(horaire.id)")!
+                    URLSession.shared.dataTask(with: url) { data, _, error in
+                        do {
+                            // Vérifiez s'il y a une erreur lors de la récupération des données
+                            if let error = error {
+                                throw error
+                            }
+
+                            // Vérifiez si des données ont été reçues
+                            guard let data = data else {
+                                throw NSError(domain: "DataError", code: 0, userInfo: [NSLocalizedDescriptionKey: "No data received"])
+                            }
+
+                            // Décodez les données en utilisant la structure DemanderActivite
+                            do {
+                                let decodedData = try JSONDecoder().decode([[DemanderActivite]].self, from: data)
+                                tabH.append(contentsOf: decodedData)
+                            } catch {
+                                print("Error fetching or decoding data:", error)
+                            }
+                        } catch {
+                            // Gérez les erreurs de décodage ou de récupération des données
+                            print("Error fetching or decoding data:", error)
+                        }
+                    }.resume()
+                }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    updatedTabPH[post.id] = tabH
+                }
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                self.tabPostHoraire = updatedTabPH
+                print(self.tabPostHoraire)
+            }
+
         }
 
-        func fetchData2() {
-            // Logique pour récupérer les informations de demande par horaire et post
+        func fetchData1() {
+            var updatedTabPH = [Int: [Int: Int]]()
+            
+            // Vérifiez si les données des posts et des horaires ont été récupérées avec succès
+            guard isPostsFetched && isHorairesFetched else {
+                print("Posts or horaires data not fetched yet")
+                return
+            }
+
+            // Boucle à travers chaque post pour récupérer les données de demande
+            for post in posts {
+                var tabNbMax = [Int: Int]() // Déclaration de tabH à l'extérieur de la boucle horaire
+                // Boucle à travers chaque horaire pour récupérer les données de demande
+                for horaire in horaires {
+                    tabNbMax[horaire.id] = 0
+                    let url = URL(string: "https://appbenevoleamelines.cluster-ig4.igpolytech.fr/api/creneauespace/post/\(post.id)/\(horaire.id)")!
+                    URLSession.shared.dataTask(with: url) { data, _, error in
+                        do {
+                            // Vérifiez s'il y a une erreur lors de la récupération des données
+                            if let error = error {
+                                throw error
+                            }
+
+                            // Vérifiez si des données ont été reçues
+                            guard let data = data else {
+                                throw NSError(domain: "DataError", code: 0, userInfo: [NSLocalizedDescriptionKey: "No data received"])
+                            }
+
+                            // Décodez les données en utilisant la structure DemanderActivite
+                            do {
+                                let decodedData = try JSONDecoder().decode([[CreneauEspace]].self, from: data)
+                                for array in decodedData {
+                                    for element in array {
+                                        if (tabNbMax[horaire.id] != nil) {
+                                            tabNbMax[horaire.id]! += element.nb_benevoles_max
+                                        }
+                                    }
+                                }
+
+                            } catch {
+                                print("Error fetching or decoding data:", error)
+                            }
+                        } catch {
+                            // Gérez les erreurs de décodage ou de récupération des données
+                            print("Error fetching or decoding data:", error)
+                        }
+                    }.resume()
+                }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    updatedTabPH[post.id] = tabNbMax
+                }
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                self.tabPostNbMax = updatedTabPH
+                print(updatedTabPH)
+            }
+
         }
 
         func getColorForPercentage(_ percentage: Double) -> Color {
@@ -356,12 +468,21 @@ struct CalendarView: View {
                 }
             }
         }
-        .onAppear{
+        .onAppear {
             viewModel.fetchPosts()
+            viewModel.fetchHoraires()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                viewModel.fetchData()
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                viewModel.fetchData1()
+            }
         }
     }
 }
 
+
+ 
 
 #Preview {
     CalendarView()

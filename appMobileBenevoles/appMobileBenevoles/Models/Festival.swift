@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Festivale: Identifiable {
+struct Festivale: Identifiable, Codable {
     let id: Int
     let nom: String
     let annee: String

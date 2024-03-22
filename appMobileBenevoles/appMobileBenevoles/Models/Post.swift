@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Post : Decodable {
+struct Post : Codable, Identifiable{
     var id: Int
     var nom_post: String
     var description: String

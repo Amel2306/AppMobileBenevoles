@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Zonebenevole: Identifiable {
+struct Zonebenevole: Identifiable , Codable{
     let id: Int
     let nom_zb: String
     let zone_plan_id: Int?
