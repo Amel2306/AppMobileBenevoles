@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		148C421F2BAF0B5700E272C5 /* JeuxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148C421E2BAF0B5700E272C5 /* JeuxView.swift */; };
+		148C42212BAF0BB600E272C5 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148C42202BAF0BB600E272C5 /* Game.swift */; };
 		14C563882BA0922A00E17F09 /* appMobileBenevolesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C563872BA0922A00E17F09 /* appMobileBenevolesApp.swift */; };
 		14C5638A2BA0922A00E17F09 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C563892BA0922A00E17F09 /* ContentView.swift */; };
 		14C5638C2BA0922C00E17F09 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14C5638B2BA0922C00E17F09 /* Assets.xcassets */; };
@@ -30,6 +32,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		148C421E2BAF0B5700E272C5 /* JeuxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = JeuxView.swift; path = ../../JeuxView.swift; sourceTree = "<group>"; };
+		148C42202BAF0BB600E272C5 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		14C563842BA0922A00E17F09 /* appMobileBenevoles.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = appMobileBenevoles.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		14C563872BA0922A00E17F09 /* appMobileBenevolesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = appMobileBenevolesApp.swift; sourceTree = "<group>"; };
 		14C563892BA0922A00E17F09 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -84,18 +88,18 @@
 		14C563862BA0922A00E17F09 /* appMobileBenevoles */ = {
 			isa = PBXGroup;
 			children = (
-				14C563E22BA875E800E17F09 /* Accueil.swift */,
 				14C563DF2BA8441900E17F09 /* Models */,
+				14C5638D2BA0922C00E17F09 /* Preview Content */,
+				14C563E22BA875E800E17F09 /* Accueil.swift */,
 				14C563982BA19AC300E17F09 /* UserDetailsView.swift */,
 				14C563872BA0922A00E17F09 /* appMobileBenevolesApp.swift */,
 				14C563892BA0922A00E17F09 /* ContentView.swift */,
-				14C5638B2BA0922C00E17F09 /* Assets.xcassets */,
-				14C5638D2BA0922C00E17F09 /* Preview Content */,
 				14C563DD2BA8439100E17F09 /* LoginView.swift */,
 				14CF98662BA9A57700551B00 /* SignUpView.swift */,
 				14CF986A2BA9C4EC00551B00 /* CalendarView.swift */,
 				14CF986E2BA9C8AC00551B00 /* NavBar.swift */,
 				14CF98702BA9D4C400551B00 /* UserSettings.swift */,
+				148C421E2BAF0B5700E272C5 /* JeuxView.swift */,
 			);
 			path = appMobileBenevoles;
 			sourceTree = "<group>";
@@ -103,6 +107,7 @@
 		14C5638D2BA0922C00E17F09 /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
+				14C5638B2BA0922C00E17F09 /* Assets.xcassets */,
 				14C5638E2BA0922C00E17F09 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
@@ -119,6 +124,7 @@
 				14CF987A2BA9E12D00551B00 /* ZoneBenevole.swift */,
 				14CF987C2BA9E18500551B00 /* CreneauEspace.swift */,
 				14CF987E2BA9E29C00551B00 /* DemandeActivite.swift */,
+				148C42202BAF0BB600E272C5 /* Game.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -193,6 +199,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				148C421F2BAF0B5700E272C5 /* JeuxView.swift in Sources */,
 				14CF98672BA9A57700551B00 /* SignUpView.swift in Sources */,
 				14CF98712BA9D4C400551B00 /* UserSettings.swift in Sources */,
 				14CF98772BA9DE0B00551B00 /* ZonePlan.swift in Sources */,
@@ -203,6 +210,7 @@
 				14C563992BA19AC300E17F09 /* UserDetailsView.swift in Sources */,
 				14CF986B2BA9C4EC00551B00 /* CalendarView.swift in Sources */,
 				14CF987F2BA9E29C00551B00 /* DemandeActivite.swift in Sources */,
+				148C42212BAF0BB600E272C5 /* Game.swift in Sources */,
 				14CF98792BA9DE9700551B00 /* Festival.swift in Sources */,
 				14CF987B2BA9E12D00551B00 /* ZoneBenevole.swift in Sources */,
 				14CF986D2BA9C5A400551B00 /* NextPageView.swift in Sources */,

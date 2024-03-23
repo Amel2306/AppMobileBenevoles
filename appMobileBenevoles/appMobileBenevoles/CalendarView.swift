@@ -480,8 +480,6 @@ struct CalendarView: View {
         }
     }
 }
-
-
  
 
 #Preview {

@@ -28,6 +28,14 @@ struct NavBar: View {
             .tabItem {
                 Image(systemName: "calendar")
             }
+            
+            NavigationView {
+                JeuxView()
+            }
+            .tabItem {
+                Image(systemName: "die.face.5")
+            }
+
             if (isLoggedIn == false){
                 NavigationView {
                     LoginView(isLoggedIn: $isLoggedIn)
