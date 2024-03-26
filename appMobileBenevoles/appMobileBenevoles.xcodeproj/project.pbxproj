@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		1485D23F2BAF788900DC4C22 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1485D23E2BAF788900DC4C22 /* CalendarView.swift */; };
+		1485D2462BB2F7BD00DC4C22 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1485D2452BB2F7BD00DC4C22 /* Color.swift */; };
+		1485D2482BB2F81200DC4C22 /* TrailingIconLabelStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1485D2472BB2F81200DC4C22 /* TrailingIconLabelStyle.swift */; };
 		148C421F2BAF0B5700E272C5 /* JeuxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148C421E2BAF0B5700E272C5 /* JeuxView.swift */; };
 		148C42212BAF0BB600E272C5 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148C42202BAF0BB600E272C5 /* Game.swift */; };
 		148C42232BAF0E4C00E272C5 /* CalendarJeuxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148C42222BAF0E4C00E272C5 /* CalendarJeuxView.swift */; };
@@ -20,7 +22,6 @@
 		14C563E12BA8442500E17F09 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C563E02BA8442500E17F09 /* User.swift */; };
 		14C563E32BA875E800E17F09 /* Accueil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C563E22BA875E800E17F09 /* Accueil.swift */; };
 		14CF98672BA9A57700551B00 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CF98662BA9A57700551B00 /* SignUpView.swift */; };
-		14CF986B2BA9C4EC00551B00 /* CalendarView1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CF986A2BA9C4EC00551B00 /* CalendarView1.swift */; };
 		14CF986D2BA9C5A400551B00 /* NextPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CF986C2BA9C5A400551B00 /* NextPageView.swift */; };
 		14CF986F2BA9C8AC00551B00 /* NavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CF986E2BA9C8AC00551B00 /* NavBar.swift */; };
 		14CF98712BA9D4C400551B00 /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CF98702BA9D4C400551B00 /* UserSettings.swift */; };
@@ -35,6 +36,8 @@
 
 /* Begin PBXFileReference section */
 		1485D23E2BAF788900DC4C22 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		1485D2452BB2F7BD00DC4C22 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		1485D2472BB2F81200DC4C22 /* TrailingIconLabelStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailingIconLabelStyle.swift; sourceTree = "<group>"; };
 		148C421E2BAF0B5700E272C5 /* JeuxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = JeuxView.swift; path = ../../JeuxView.swift; sourceTree = "<group>"; };
 		148C42202BAF0BB600E272C5 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		148C42222BAF0E4C00E272C5 /* CalendarJeuxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarJeuxView.swift; sourceTree = "<group>"; };
@@ -48,7 +51,6 @@
 		14C563E02BA8442500E17F09 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		14C563E22BA875E800E17F09 /* Accueil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Accueil.swift; sourceTree = "<group>"; };
 		14CF98662BA9A57700551B00 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
-		14CF986A2BA9C4EC00551B00 /* CalendarView1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView1.swift; sourceTree = "<group>"; };
 		14CF986C2BA9C5A400551B00 /* NextPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextPageView.swift; sourceTree = "<group>"; };
 		14CF986E2BA9C8AC00551B00 /* NavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBar.swift; sourceTree = "<group>"; };
 		14CF98702BA9D4C400551B00 /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
@@ -100,12 +102,12 @@
 				14C563892BA0922A00E17F09 /* ContentView.swift */,
 				14C563DD2BA8439100E17F09 /* LoginView.swift */,
 				14CF98662BA9A57700551B00 /* SignUpView.swift */,
-				14CF986A2BA9C4EC00551B00 /* CalendarView1.swift */,
 				148C42222BAF0E4C00E272C5 /* CalendarJeuxView.swift */,
 				14CF986E2BA9C8AC00551B00 /* NavBar.swift */,
 				14CF98702BA9D4C400551B00 /* UserSettings.swift */,
 				148C421E2BAF0B5700E272C5 /* JeuxView.swift */,
 				1485D23E2BAF788900DC4C22 /* CalendarView.swift */,
+				1485D2452BB2F7BD00DC4C22 /* Color.swift */,
 			);
 			path = appMobileBenevoles;
 			sourceTree = "<group>";
@@ -131,6 +133,7 @@
 				14CF987C2BA9E18500551B00 /* CreneauEspace.swift */,
 				14CF987E2BA9E29C00551B00 /* DemandeActivite.swift */,
 				148C42202BAF0BB600E272C5 /* Game.swift */,
+				1485D2472BB2F81200DC4C22 /* TrailingIconLabelStyle.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -207,6 +210,7 @@
 			files = (
 				148C421F2BAF0B5700E272C5 /* JeuxView.swift in Sources */,
 				148C42232BAF0E4C00E272C5 /* CalendarJeuxView.swift in Sources */,
+				1485D2462BB2F7BD00DC4C22 /* Color.swift in Sources */,
 				14CF98672BA9A57700551B00 /* SignUpView.swift in Sources */,
 				14CF98712BA9D4C400551B00 /* UserSettings.swift in Sources */,
 				14CF98772BA9DE0B00551B00 /* ZonePlan.swift in Sources */,
@@ -216,13 +220,13 @@
 				14C5638A2BA0922A00E17F09 /* ContentView.swift in Sources */,
 				14CF987D2BA9E18500551B00 /* CreneauEspace.swift in Sources */,
 				14C563992BA19AC300E17F09 /* UserDetailsView.swift in Sources */,
-				14CF986B2BA9C4EC00551B00 /* CalendarView1.swift in Sources */,
 				14CF987F2BA9E29C00551B00 /* DemandeActivite.swift in Sources */,
 				148C42212BAF0BB600E272C5 /* Game.swift in Sources */,
 				14CF98792BA9DE9700551B00 /* Festival.swift in Sources */,
 				14CF987B2BA9E12D00551B00 /* ZoneBenevole.swift in Sources */,
 				14CF986D2BA9C5A400551B00 /* NextPageView.swift in Sources */,
 				14CF986F2BA9C8AC00551B00 /* NavBar.swift in Sources */,
+				1485D2482BB2F81200DC4C22 /* TrailingIconLabelStyle.swift in Sources */,
 				14C563DE2BA8439100E17F09 /* LoginView.swift in Sources */,
 				14C563E12BA8442500E17F09 /* User.swift in Sources */,
 				14C563882BA0922A00E17F09 /* appMobileBenevolesApp.swift in Sources */,
