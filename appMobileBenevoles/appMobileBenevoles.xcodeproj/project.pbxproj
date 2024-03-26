@@ -10,7 +10,8 @@
 		1485D23F2BAF788900DC4C22 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1485D23E2BAF788900DC4C22 /* CalendarView.swift */; };
 		1485D2462BB2F7BD00DC4C22 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1485D2452BB2F7BD00DC4C22 /* Color.swift */; };
 		1485D2482BB2F81200DC4C22 /* TrailingIconLabelStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1485D2472BB2F81200DC4C22 /* TrailingIconLabelStyle.swift */; };
-		148C421F2BAF0B5700E272C5 /* JeuxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148C421E2BAF0B5700E272C5 /* JeuxView.swift */; };
+		1485D24C2BB2FC6300DC4C22 /* GameDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1485D24B2BB2FC6300DC4C22 /* GameDetailsView.swift */; };
+		148C421F2BAF0B5700E272C5 /* GamesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148C421E2BAF0B5700E272C5 /* GamesListView.swift */; };
 		148C42212BAF0BB600E272C5 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148C42202BAF0BB600E272C5 /* Game.swift */; };
 		148C42232BAF0E4C00E272C5 /* CalendarJeuxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148C42222BAF0E4C00E272C5 /* CalendarJeuxView.swift */; };
 		14C563882BA0922A00E17F09 /* appMobileBenevolesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C563872BA0922A00E17F09 /* appMobileBenevolesApp.swift */; };
@@ -38,7 +39,8 @@
 		1485D23E2BAF788900DC4C22 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		1485D2452BB2F7BD00DC4C22 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		1485D2472BB2F81200DC4C22 /* TrailingIconLabelStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailingIconLabelStyle.swift; sourceTree = "<group>"; };
-		148C421E2BAF0B5700E272C5 /* JeuxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = JeuxView.swift; path = ../../JeuxView.swift; sourceTree = "<group>"; };
+		1485D24B2BB2FC6300DC4C22 /* GameDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDetailsView.swift; sourceTree = "<group>"; };
+		148C421E2BAF0B5700E272C5 /* GamesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesListView.swift; sourceTree = "<group>"; };
 		148C42202BAF0BB600E272C5 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		148C42222BAF0E4C00E272C5 /* CalendarJeuxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarJeuxView.swift; sourceTree = "<group>"; };
 		14C563842BA0922A00E17F09 /* appMobileBenevoles.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = appMobileBenevoles.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -74,9 +76,65 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1485D2492BB2FB1900DC4C22 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				1485D2452BB2F7BD00DC4C22 /* Color.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		1485D24A2BB2FB3C00DC4C22 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				14CF98702BA9D4C400551B00 /* UserSettings.swift */,
+				14C563982BA19AC300E17F09 /* UserDetailsView.swift */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
+		1485D24D2BB2FC9400DC4C22 /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				148C421E2BAF0B5700E272C5 /* GamesListView.swift */,
+				1485D24B2BB2FC6300DC4C22 /* GameDetailsView.swift */,
+			);
+			path = Game;
+			sourceTree = "<group>";
+		};
+		1485D24F2BB2FCE200DC4C22 /* Calendar */ = {
+			isa = PBXGroup;
+			children = (
+				14CF986C2BA9C5A400551B00 /* NextPageView.swift */,
+				148C42222BAF0E4C00E272C5 /* CalendarJeuxView.swift */,
+				1485D23E2BAF788900DC4C22 /* CalendarView.swift */,
+			);
+			path = Calendar;
+			sourceTree = "<group>";
+		};
+		1485D2502BB2FD0200DC4C22 /* Authentification */ = {
+			isa = PBXGroup;
+			children = (
+				14C563DD2BA8439100E17F09 /* LoginView.swift */,
+				14CF98662BA9A57700551B00 /* SignUpView.swift */,
+			);
+			path = Authentification;
+			sourceTree = "<group>";
+		};
+		1485D2512BB2FD3900DC4C22 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				14CF986E2BA9C8AC00551B00 /* NavBar.swift */,
+				14C563E22BA875E800E17F09 /* Accueil.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
 		14C5637B2BA0922A00E17F09 = {
 			isa = PBXGroup;
 			children = (
+				14C563892BA0922A00E17F09 /* ContentView.swift */,
+				14C563872BA0922A00E17F09 /* appMobileBenevolesApp.swift */,
 				14C563862BA0922A00E17F09 /* appMobileBenevoles */,
 				14C563852BA0922A00E17F09 /* Products */,
 			);
@@ -93,21 +151,14 @@
 		14C563862BA0922A00E17F09 /* appMobileBenevoles */ = {
 			isa = PBXGroup;
 			children = (
+				1485D2512BB2FD3900DC4C22 /* Home */,
+				1485D2502BB2FD0200DC4C22 /* Authentification */,
+				1485D24F2BB2FCE200DC4C22 /* Calendar */,
+				1485D24D2BB2FC9400DC4C22 /* Game */,
+				1485D24A2BB2FB3C00DC4C22 /* User */,
 				14C5638D2BA0922C00E17F09 /* Preview Content */,
+				1485D2492BB2FB1900DC4C22 /* Extensions */,
 				14C563DF2BA8441900E17F09 /* Models */,
-				14CF986C2BA9C5A400551B00 /* NextPageView.swift */,
-				14C563E22BA875E800E17F09 /* Accueil.swift */,
-				14C563982BA19AC300E17F09 /* UserDetailsView.swift */,
-				14C563872BA0922A00E17F09 /* appMobileBenevolesApp.swift */,
-				14C563892BA0922A00E17F09 /* ContentView.swift */,
-				14C563DD2BA8439100E17F09 /* LoginView.swift */,
-				14CF98662BA9A57700551B00 /* SignUpView.swift */,
-				148C42222BAF0E4C00E272C5 /* CalendarJeuxView.swift */,
-				14CF986E2BA9C8AC00551B00 /* NavBar.swift */,
-				14CF98702BA9D4C400551B00 /* UserSettings.swift */,
-				148C421E2BAF0B5700E272C5 /* JeuxView.swift */,
-				1485D23E2BAF788900DC4C22 /* CalendarView.swift */,
-				1485D2452BB2F7BD00DC4C22 /* Color.swift */,
 			);
 			path = appMobileBenevoles;
 			sourceTree = "<group>";
@@ -208,7 +259,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				148C421F2BAF0B5700E272C5 /* JeuxView.swift in Sources */,
+				148C421F2BAF0B5700E272C5 /* GamesListView.swift in Sources */,
 				148C42232BAF0E4C00E272C5 /* CalendarJeuxView.swift in Sources */,
 				1485D2462BB2F7BD00DC4C22 /* Color.swift in Sources */,
 				14CF98672BA9A57700551B00 /* SignUpView.swift in Sources */,
@@ -227,6 +278,7 @@
 				14CF986D2BA9C5A400551B00 /* NextPageView.swift in Sources */,
 				14CF986F2BA9C8AC00551B00 /* NavBar.swift in Sources */,
 				1485D2482BB2F81200DC4C22 /* TrailingIconLabelStyle.swift in Sources */,
+				1485D24C2BB2FC6300DC4C22 /* GameDetailsView.swift in Sources */,
 				14C563DE2BA8439100E17F09 /* LoginView.swift in Sources */,
 				14C563E12BA8442500E17F09 /* User.swift in Sources */,
 				14C563882BA0922A00E17F09 /* appMobileBenevolesApp.swift in Sources */,
