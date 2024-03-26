@@ -15,9 +15,7 @@ struct ContentView: View {
     var body: some View {
         NavBar()
         .environmentObject(userSettings) // Injecter l'objet dans l'environnement
-    }
-   
-    
+    }  
 }
 
 #Preview {

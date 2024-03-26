@@ -1,7 +1,6 @@
 import SwiftUI
 
 struct WelcomeView: View {
-    var user : User?
     
     var body: some View {
         ScrollView {

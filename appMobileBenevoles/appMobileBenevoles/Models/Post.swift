@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Post : Codable, Identifiable{
+struct Post : Codable, Identifiable, Hashable{
     var id: Int
     var nom_post: String
     var description: String

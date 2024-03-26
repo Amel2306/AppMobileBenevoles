@@ -12,6 +12,7 @@ struct UserDetailsView: View {
     @EnvironmentObject var userSettings: UserSettings
 
     var body: some View {
+
         VStack {
             Text("Bienvenue, \(userSettings.user?.prenom ?? "")")
                 .font(.title)
