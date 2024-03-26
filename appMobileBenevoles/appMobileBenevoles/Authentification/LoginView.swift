@@ -63,7 +63,7 @@ struct LoginView : View {
              .background(Color.green)
              .cornerRadius(10)
              
-             NavigationLink(destination: WelcomeView(user: user), isActive: $showingLoginScreen) {
+             NavigationLink(destination: WelcomeView(), isActive: $showingLoginScreen) {
                  EmptyView()
              }
          }

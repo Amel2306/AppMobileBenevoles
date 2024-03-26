@@ -25,6 +25,7 @@ struct NavBar: View {
             NavigationView {
                 CalendarView()
             }
+            .navigationTitle("Calendrier Bénévole")
             .tabItem {
                 Image(systemName: "calendar")
             }
@@ -56,7 +57,7 @@ struct NavBar: View {
                     UserDetailsView()
                 }
                 .tabItem {
-                    Image(systemName: "person.circle")
+                    Image(systemName: "person")
                 }
             }
         }

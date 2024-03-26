@@ -1,3 +1,10 @@
+//
+//  CalendarView.swift
+//  appMobileBenevoles
+//
+//  Created by Amel  on 19/03/2024.
+//
+
 import Foundation
 import SwiftUI
 
@@ -18,21 +25,15 @@ import SwiftUI
     }
 
     struct ActivityRegistration {
-        var activity: String?
+        var activity: String
         var timeSlot: String
-        var numberOfRegistrations: Int?
+        var numberOfRegistrations: Int
         var maxNumberOfRegistrations: Int
     }
 
-struct TimeSlot : Hashable{
-        let id: Int
-        let creneau: String
-    }
-
-
     // Classe ViewModel
     class ContentViewModel: ObservableObject {
-        @Published var selectedDay = "2024-03-23"
+        @Published var selectedDay = "Samedi"
         @Published var selectedMoment = "Journée"
         @Published var selectedActivity: String = "Toutes"
         @Published var isNextButtonEnabled = false
@@ -41,34 +42,12 @@ struct TimeSlot : Hashable{
         @Published var isPostsFetched = false
         @Published var isHorairesFetched = false
         @Published var tabPostHoraire = [Int: [[DemanderActivite]]]()
+
         
         @State private var tabPostNbMax = [Int: [Int: Int]]()
         @State private var selectedSlot = [(Int, Int)]()
         @State private var chooseJeuZone = false
         @State private var i = 0
-        
-        
-        var processedSlots: [TimeSlot] {
-            let filteredHoraires = horaires.filter { $0.date == selectedDay }
-            var slots: [TimeSlot] = []
-            
-            for creneau in filteredHoraires {
-                let startTime = String(creneau.horaire_debut.prefix(2))
-                let endTime = String(creneau.horaire_fin.prefix(2))
-                let timeSlot = "\(startTime)-\(endTime)h"
-                let slot = TimeSlot(id: creneau.id, creneau: timeSlot)
-                slots.append(slot)
-            }
-            
-            return slots
-        }
-        
-        var uniqueDays: [String] {
-            let days = Set(horaires.map { $0.date })
-            return Array(days)
-        }
-
-        
 
         var body: some View {
             VStack {
@@ -215,7 +194,7 @@ struct TimeSlot : Hashable{
                                 for array in decodedData {
                                     for element in array {
                                         if (tabNbMax[horaire.id] != nil) {
-                                            tabNbMax[horaire.id]! += element.nb_benevoles_max
+                                            tabNbMax[horaire.id]! += element.nb_benevoles_max!
                                         }
                                     }
                                 }
@@ -254,55 +233,65 @@ struct TimeSlot : Hashable{
             // Naviguer vers une autre vue si nécessaire
         }
         
-        var saturdayActivities: [String] {
-            var activities: [String] = []
-            for post in posts {
-                activities.append(post.nom_post)
-            }
-            return activities
-        }
-
-        var sundayActivities: [String] {
-            var activities: [String] = []
-            for post in posts {
-                activities.append(post.nom_post)
-            }
-            return activities
-        }
-        
-        //TO DO : moments
-        let moments = ["Journée","Matin","Midi","Après-midi","Soir"]
-        
         var registrations: [ActivityRegistration] {
-            var registrations_temp: [ActivityRegistration] = []
-            for postId in 1..<7 {
-                for creneau_id in 0..<8 {
-                    let timeSlot = "\(creneau_id)"
-                    let numberOfRegistrations = tabPostHoraire[postId]?[creneau_id].count ?? 0
+                    var registrations_temp: [ActivityRegistration] = []
+                    for postId in 1..<7 {
+                        for creneau_id in 0..<8 {
+                            let timeSlot = "(creneau_id)"
+                            let numberOfRegistrations = tabPostHoraire[postId]?[creneau_id].count ?? 0
 
-                    // TO DO: calculer le nombre maximal d'inscriptions pour ce créneau
-                    let maxNumberOfRegistrations = 50
-                    
-                    let registration = ActivityRegistration(activity: getActivityName(for: postId), timeSlot: timeSlot, numberOfRegistrations: numberOfRegistrations, maxNumberOfRegistrations: maxNumberOfRegistrations)
-                    registrations_temp.append(registration)
-                    print(registration)
+                            // TO DO: calculer le nombre maximal d'inscriptions pour ce créneau
+                            let maxNumberOfRegistrations = 50
+
+                            let registration = ActivityRegistration(activity: "\(postId)" , timeSlot: timeSlot, numberOfRegistrations: numberOfRegistrations, maxNumberOfRegistrations: maxNumberOfRegistrations)
+                            registrations_temp.append(registration)
+                        }
+                    }
+                    return registrations_temp
                 }
-            }
-            return registrations_temp
-        }
+         
+        let saturdayActivities = ["Jeux en plein air", "Petit déjeuner","Déjeuner","Concours de dessin"]
+        let sundayActivities = ["Randonnée pédestre", "Brunch", "Dîner en famille", "Cinéma"]
+        let moments = ["Journée","Matin","Midi","Après-midi"]
+        let days = ["Samedi","Dimanche"]
         
+  /*      let registrations: [ActivityRegistration] = [
+            ActivityRegistration(activity: "Jeux en plein air", timeSlot: "9h-11h", numberOfRegistrations: Int.random(in: 1...20), maxNumberOfRegistrations: 20),
+            ActivityRegistration(activity: "Jeux en plein air", timeSlot: "11h-12h", numberOfRegistrations: Int.random(in: 1...10), maxNumberOfRegistrations: 10),
+            ActivityRegistration(activity: "Petit déjeuner", timeSlot: "9h-11h", numberOfRegistrations: Int.random(in: 1...15), maxNumberOfRegistrations: 15),
+            ActivityRegistration(activity: "Déjeuner", timeSlot: "12h-14h", numberOfRegistrations: Int.random(in: 1...2), maxNumberOfRegistrations: 2),
+            ActivityRegistration(activity: "Concours de dessin", timeSlot: "14h-16h", numberOfRegistrations: Int.random(in: 1...10), maxNumberOfRegistrations: 10),
+            ActivityRegistration(activity: "Randonnée pédestre", timeSlot: "9h-11h", numberOfRegistrations: Int.random(in: 1...5), maxNumberOfRegistrations: 5),
+            ActivityRegistration(activity: "Randonnée pédestre", timeSlot: "11h-12h", numberOfRegistrations: Int.random(in: 1...8), maxNumberOfRegistrations: 8),
+            ActivityRegistration(activity: "Brunch", timeSlot: "9h-11h", numberOfRegistrations: Int.random(in: 1...15), maxNumberOfRegistrations: 15),
+            ActivityRegistration(activity: "Dîner en famille", timeSlot: "12h-14h", numberOfRegistrations: Int.random(in: 1...20), maxNumberOfRegistrations: 20),
+            ActivityRegistration(activity: "Cinéma", timeSlot: "14h-16h", numberOfRegistrations: Int.random(in: 1...30), maxNumberOfRegistrations: 30),
+        ]
+        */
         var selectedDayActivities: [String] {
-            selectedDay == "2024-03-23" ? saturdayActivities : sundayActivities
-        }
-        func getActivityName(for id: Int) -> String? {
-            let post = posts.first { $0.id == id }
-            return post?.nom_post
+            selectedDay == "Samedi" ? saturdayActivities : sundayActivities
         }
         
+        var timeSlots: [String] {
+            var slots = [""]
+            switch selectedMoment {
+            case "Matin":
+                slots += ["9h-11h", "11h-12h"]
+            case "Midi":
+                slots += ["12h-14h"]
+            case "Après-midi":
+                slots += ["14h-16h", "16h-18h"]
+            case "Journée":
+                slots += ["9h-11h", "11h-12h", "14h-16h", "16h-18h"]
+            default:
+                slots += ["9h-11h", "11h-12h", "14h-16h", "16h-18h"]
+            }
+            return slots
+        }
     }
 
 
-struct CalendarView: View {
+struct CalendarView1: View {
     @StateObject var viewModel = ContentViewModel()
     @State private var choixActivite: String?
     @State private var choixCreneau: String?
@@ -317,8 +306,7 @@ struct CalendarView: View {
             choixCreneau = timeSlot
         }
     }
-    
-    
+
     
     @State private var columns: [GridItem] = Array(repeating: .init(.flexible()), count: 5) // Initialisation avec 5 colonnes
     
@@ -331,7 +319,7 @@ struct CalendarView: View {
                         Text("Jour")
                         Spacer()
                         Picker("Jour", selection: $viewModel.selectedDay) {
-                            ForEach(viewModel.uniqueDays, id: \.self) { day in
+                            ForEach(viewModel.days, id: \.self) { day in
                                 Text(day)
                             }
                         }
@@ -378,8 +366,8 @@ struct CalendarView: View {
                         
                         // Affichage des plages horaires
                         LazyVGrid(columns: columns) {
-                            ForEach(viewModel.processedSlots, id: \.self) { timeSlot in
-                                Text(timeSlot.creneau)
+                            ForEach(viewModel.timeSlots, id: \.self) { timeSlot in
+                                Text(timeSlot)
                                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                                     .background(Color.gray.opacity(0.1))
                                     .cornerRadius(8)
@@ -389,20 +377,18 @@ struct CalendarView: View {
                         // Affichage des activités
                         ForEach(viewModel.selectedDayActivities.indices, id: \.self) { rowIndex in
                             HStack {
-                                ForEach(viewModel.processedSlots, id: \.self) { timeSlot in
+                                ForEach(viewModel.timeSlots.indices, id: \.self) { columnIndex in
                                     let activity = viewModel.selectedDayActivities[rowIndex]
+                                    let timeSlot = viewModel.timeSlots[columnIndex]
                                     
-                                    if viewModel.processedSlots.first == timeSlot {
+                                    if columnIndex == 0 {
                                         Text(activity)
-                                            .font(.subheadline)
+                                            .font(.subheadline) // Diminuer la taille de la police d'écriture
                                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                                             .background(Color.gray.opacity(0.1))
                                             .cornerRadius(8)
                                     } else {
-                                        let registration = viewModel.registrations.first {
-                                            $0.activity == activity && $0.timeSlot == timeSlot.creneau
-                                        }
-
+                                        let registration = viewModel.registrations.first { $0.activity == activity && $0.timeSlot == timeSlot }
                                         let numberOfRegistrations = registration?.numberOfRegistrations ?? 0
                                         let maxNumberOfRegistrations = registration?.maxNumberOfRegistrations ?? 20
                                         
@@ -423,7 +409,7 @@ struct CalendarView: View {
                                             }
                                         }()
                                         
-                                        let isSelected = choixActivite == activity && choixCreneau == timeSlot.creneau
+                                        let isSelected = choixActivite == activity && choixCreneau == timeSlot
                                         let backgroundColor: Color = isSelected ? Color.blue.opacity(0.5) : colors
                                         
                                         if viewModel.selectedActivity == "Toutes" || activity == viewModel.selectedActivity {
@@ -442,7 +428,7 @@ struct CalendarView: View {
                                                 .cornerRadius(8)
                                                 .transition(.opacity)
                                                 .onTapGesture {
-                                                    resetSelection(activity: activity, timeSlot: timeSlot.creneau) // Utilisation de timeSlot.creneau
+                                                    resetSelection(activity: activity, timeSlot: timeSlot)
                                                 }
                                         } else {
                                             Color.clear
@@ -452,7 +438,6 @@ struct CalendarView: View {
                                 }
                             }
                         }
-
                     }
 
                     Button(action: {
@@ -470,14 +455,14 @@ struct CalendarView: View {
                         }
                         .shadow(radius: (choixActivite != nil && choixCreneau != nil) ? 3 : 0)
 
-                        .background(
+                    /*.background(
                             NavigationLink(
                                 destination: NextPageView(activity: choixActivite ?? "", timeSlot: choixCreneau ?? ""),
                                 isActive: $shouldNavigate // Utilisation de la variable booléenne pour contrôler l'activation de la navigation
                             ) {
                                 EmptyView()
                             }
-                        )
+                        )*/
                     
                 }
             }
@@ -486,17 +471,15 @@ struct CalendarView: View {
             .onChange(of: viewModel.selectedMoment) { newValue in
                 switch newValue {
                 case "Matin":
-                    columns = Array(repeating: .init(.flexible()), count: 2)
+                    columns = Array(repeating: .init(.flexible()), count: 3)
                 case "Midi":
                     columns = Array(repeating: .init(.flexible()), count: 2)
                 case "Après-midi":
                     columns = Array(repeating: .init(.flexible()), count: 3)
-                case "Soir" :
-                    columns = Array(repeating: .init(.flexible()), count: 2)
                 case "Journée":
-                    columns = Array(repeating: .init(.flexible()), count: 6)
+                    columns = Array(repeating: .init(.flexible()), count: 5)
                 default:
-                    columns = Array(repeating: .init(.flexible()), count: 6)
+                    columns = Array(repeating: .init(.flexible()), count: 5)
                 }
             }
         }
@@ -512,12 +495,8 @@ struct CalendarView: View {
         }
     }
 }
-
-
  
 
-struct Calendar_Previews: PreviewProvider {
-        static var previews: some View {
-            CalendarView()
-        }
-    }
+#Preview {
+    CalendarView1()
+}

@@ -1,12 +1,16 @@
 import SwiftUI
 
 struct WelcomeView: View {
-    var user : User?
     
     var body: some View {
         ScrollView {
             VStack {
-                Text("Bienvenue sur notre appli")
+                Image("accueilew")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height: 200) // Ajustez la hauteur selon vos besoins
+                
+                Text("Sortons Jouer !")
                     .font(.title)
                     .fontWeight(.bold)
                     .padding()
@@ -28,7 +32,6 @@ struct WelcomeView: View {
                 }
             }
             .padding()
-            //.navigationTitle("Accueil")
             .navigationBarBackButtonHidden(true) // Empêche le bouton de retour
         }
     }
