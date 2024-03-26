@@ -1,15 +1,9 @@
-//
-//  NavBar.swift
-//  appMobileBenevoles
-//
-//  Created by Amel  on 19/03/2024.
-//
 
 import Foundation
 import SwiftUI
+
 struct NavBar: View {
     @State private var isLoggedIn = false
-    
     
     var body: some View {
         TabView {
@@ -31,12 +25,12 @@ struct NavBar: View {
             }
             
             NavigationView {
-                JeuxView()
+                PostAndJeuxView() // Utilisation de la vue personnalisée pour les jeux et les informations sur les postes
             }
             .tabItem {
-                Image(systemName: "die.face.5")
+                Image(systemName: "info.circle")
             }
-
+            
             if (isLoggedIn == false){
                 NavigationView {
                     LoginView(isLoggedIn: $isLoggedIn)
@@ -52,7 +46,7 @@ struct NavBar: View {
                 .tabItem {
                     Image(systemName: "person.badge.plus")
                 }
-            }else {
+            } else {
                 NavigationView {
                     UserDetailsView()
                 }
@@ -65,3 +59,46 @@ struct NavBar: View {
     }
 }
 
+struct SelectedTab: Identifiable {
+    let id = UUID()
+    let item: String
+}
+
+struct PostAndJeuxView: View {
+    @State private var showInfos = false
+    @State private var selectedTab: SelectedTab? // Stocker l'élément sélectionné
+
+    var body: some View {
+        VStack(spacing: 20) {
+            Button(action: {
+                showInfos = true
+                selectedTab = SelectedTab(item: "infos")
+            }) {
+                Text("Information Post")
+                    .padding()
+                    .foregroundColor(.white)
+                    .background(Color.blue)
+                    .cornerRadius(8)
+            }
+            Button(action: {
+                showInfos = false // Assurez-vous de réinitialiser la variable lorsque vous changez d'onglet
+                selectedTab = SelectedTab(item: "jeux")
+            }) {
+                Text("Jeux")
+                    .padding()
+                    .foregroundColor(.white)
+                    .background(Color.blue)
+                    .cornerRadius(8)
+            }
+        }
+        .sheet(item: $selectedTab) { selected in
+            NavigationView { // Utilisez NavigationView pour obtenir un bouton de retour automatique
+                if selected.item == "infos" {
+                    PostsListView()
+                } else {
+                    JeuxView()
+                }
+            }
+        }
+    }
+}
