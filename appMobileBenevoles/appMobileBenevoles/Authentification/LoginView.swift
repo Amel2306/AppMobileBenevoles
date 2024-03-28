@@ -1,10 +1,3 @@
-//
-//  LoginView.swift
-//  appMobileBenevoles
-//
-//  Created by Amel  on 18/03/2024.
-//
-
 import Foundation
 import SwiftUI
 
@@ -31,12 +24,17 @@ struct LoginView : View {
  var body: some View {
     ScrollView {
          VStack {
+             
+             Image("logoew")
+                 .resizable()
+                 .aspectRatio(contentMode: .fit)
+                 .frame(width: 200, height: 200)
              Text("Connexion")
                  .font(.largeTitle)
                  .bold()
                  .padding()
              
-             TextField("Username", text: $email)
+             TextField("Email", text: $email)
                  .padding()
                  .frame(width: 300, height: 50)
                  .background(Color.black.opacity(0.05))
@@ -44,31 +42,57 @@ struct LoginView : View {
                  .border(.red, width: CGFloat(wrongUsername))
              
              
-             SecureField("Password", text: $password)
+             SecureField("Mot de passe", text: $password)
                  .padding()
                  .frame(width: 300, height: 50)
                  .background(Color.black.opacity(0.05))
                  .cornerRadius(10)
                  .border(.red, width: CGFloat(wrongPassword))
              
-             Button("Login") {
+             Button {
+                 
                  let requestBody = ["email": email.lowercased(), "password": password]
                  
                  print(requestBody)
                  
                  authenticateUser(requestBody: requestBody)
              }
+                  label: {
+                     Text("Se connecter")
+                         .fontWeight(.bold) // Mettre le texte en gras
+                 }
              .foregroundColor(.white)
              .frame(width: 300, height: 50)
-             .background(Color.green)
+             .background(LinearGradient(colors: [.purple, .green], startPoint: .topLeading, endPoint: .bottomTrailing))
              .cornerRadius(10)
              
              NavigationLink(destination: WelcomeView(), isActive: $showingLoginScreen) {
                  EmptyView()
              }
+             
+             Circle()
+                         .fill(LinearGradient(gradient: Gradient(colors: [Color.purple, Color.white]), startPoint: .topLeading, endPoint: .bottomTrailing))
+                         .frame(width: 400, height: 400)
+                         .opacity(0.9)
+                         .offset(y: 200)
+             
+             
+             
+             
          }
+        
      }
+    .background(
+        LinearGradient(
+            gradient: Gradient(colors: [Color.purple, Color.green]),
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
+        .opacity(0.20)
+    )
+    
  }
+    
  
  func authenticateUser(requestBody: [String: String]) {
      guard let url = URL(string: "https://appbenevoleamelines.cluster-ig4.igpolytech.fr/api/authentification/login") else {

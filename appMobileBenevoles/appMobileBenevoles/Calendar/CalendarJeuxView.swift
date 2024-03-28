@@ -200,6 +200,8 @@ class ContentCalendarJeuViewModel: ObservableObject {
 }
 
 struct CalendarJeuView: View {
+    @EnvironmentObject var userSettings: UserSettings
+
     @StateObject var viewModel = ContentCalendarJeuViewModel()
     @State private var selectedZoneId: Int? // Stocker l'ID de la zone sélectionnée
     @State private var selectedCreneauId: Int? // Stocker l'ID de la zone sélectionnée
@@ -207,12 +209,16 @@ struct CalendarJeuView: View {
     @State private var selectedZoneDetails: String = ""// Stocker l'ID de la zone sélectionnée
     @State private var isRegistered = false // État pour suivre le statut d'inscription
     @State private var selectedCreneau: Creneau? // Stocker le créneau sélectionné
-
+    @State private var showAlert = false
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
-                Text("Titre")
+                Text("Animation jeu") // Titre de la vue
+                    .font(.title)
+                    .fontWeight(.bold)
+                    .padding(.top, 20)
+               
                 ForEach(viewModel.horaires, id: \.self) { creneau in
                     VStack(alignment: .leading, spacing: 8) {
                         
@@ -229,25 +235,55 @@ struct CalendarJeuView: View {
                         if selectedCreneau == creneau {
                             ForEach(viewModel.espaces, id: \.self) { zone in
                                 Text("\(zone.nom_zb)")
+                                    .fontWeight(.semibold)
                                 let zoneId = zone.id
                                 let horaireId = creneau.id
                                 let demandeCount = viewModel.tabEspaceHoraire[zoneId]?[horaireId-1].count ?? 0
                                 let maxCount = viewModel.tabEspaceNbMax[zoneId]?[horaireId] ?? 0
                                 let ratio = maxCount > 0 ? Double(demandeCount) / Double(maxCount) : 0.0
-                                let fillColor: Color = ratio > 0.75 ? .red : (ratio > 0.5 ? .orange : .green)
+                                
+                                let colors: Color = {
+                                    switch ratio {
+                                    case 0.0 :
+                                        return Color.white
+                                    case ..<0.25:
+                                        return Color.green
+                                    case 0.25..<0.50:
+                                        return Color.yellow
+                                    case 0.50..<0.75:
+                                        return Color.orange
+                                    case 0.75...:
+                                        return Color.red
+                                    default:
+                                        return Color.white
+
+                                    }
+                                }()
+                                
+                                let fillColor: Color = colors
 
                                 Button (action: {
-                                    selectedZoneId = zoneId
-                                    selectedCreneauId = horaireId
-                                    selectedZoneDetails = zone.nom_zb
-                                    selectedCreneauDetails = "\(creneau.date == "2024-03-23" ? "Samedi" : "Dimanche") : \(String(creneau.horaire_debut.prefix(5)))-\(String(creneau.horaire_fin.prefix(5)))"
-                                    isRegistered = true
+                                    if (userSettings.user == nil) {
+                                        showAlert = true
+                                    }
+                                    else {
+                                        selectedZoneId = zoneId
+                                        selectedCreneauId = horaireId
+                                        selectedZoneDetails = zone.nom_zb
+                                        selectedCreneauDetails = "\(creneau.date == "2024-03-23" ? "Samedi" : "Dimanche") : \(String(creneau.horaire_debut.prefix(5)))-\(String(creneau.horaire_fin.prefix(5)))"
+                                        isRegistered = true
+                                    }
                                 }) {
                                     Text("\(demandeCount)/\(maxCount)")
                                         .frame(maxWidth: .infinity)
                                         .padding(8)
-                                        .background(fillColor.opacity(0.5))
+                                        .background(fillColor.opacity(0.3))
                                         .cornerRadius(8)
+                                        .padding(.horizontal, 30)
+                                        .foregroundColor(Color.black)
+                                }
+                                .alert(isPresented: $showAlert) {
+                                    Alert(title: Text("Connectez-vous"), message: Text("Vous devez être connecté pour vous inscrire."), dismissButton: .default(Text("OK")))
                                 }
                             }
                         }
@@ -270,6 +306,15 @@ struct CalendarJeuView: View {
                 viewModel.fetchData1()
             }
         }
+        .navigationTitle("Calendrier Animation jeu")
+        .background(
+            LinearGradient(
+                gradient: Gradient(colors: [Color.purple, Color.green]),
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+            .opacity(0.20)
+        )
     }
 }
 
@@ -277,5 +322,3 @@ struct CalendarJeuView: View {
 #Preview {
     CalendarJeuView()
 }
-
-

@@ -9,9 +9,6 @@ import Foundation
 import SwiftUI
 
 class ContentCalendarViewModel: ObservableObject {
-    @Published var selectedDay = "Samedi"
-    @Published var selectedMoment = "Journée"
-    @Published var selectedActivity: String = "Toutes"
     @Published var isNextButtonEnabled = false
     @Published var posts: [Post] = []
     @Published var horaires : [Creneau] = []
@@ -187,7 +184,6 @@ class ContentCalendarViewModel: ObservableObject {
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             self.tabPostNbMax = updatedTabPH
-            print(updatedTabPH)
         }
 
     }
@@ -200,9 +196,13 @@ struct CalendarView: View {
     var body: some View {
         NavigationView {
             ScrollView {
+                Text("Calendrier inscription")
+                    .font(.title)
+                    .fontWeight(.bold)
+                    .padding(.top, 20)
                 VStack(alignment: .leading) {
-                    SectionView(title: "Samedi", horaires: viewModel.horairesSamedi, viewModel: viewModel)
-                    SectionView(title: "Dimanche", horaires: viewModel.horaireDimanche, viewModel: viewModel)
+                    SectionViewCalendar(title: "Samedi", horaires: viewModel.horairesSamedi, viewModel: viewModel)
+                    SectionViewCalendar(title: "Dimanche", horaires: viewModel.horaireDimanche, viewModel: viewModel)
                 }
                 .padding()
                 .onAppear {
@@ -216,12 +216,19 @@ struct CalendarView: View {
                     }
                 }
             }
-            .navigationTitle("Calendrier Post")
+            .background(
+                LinearGradient(
+                    gradient: Gradient(colors: [Color.purple, Color.green]),
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+                .opacity(0.20)
+            )
         }
     }
 }
 
-struct SectionView: View {
+struct SectionViewCalendar: View {
     let title: String
     let horaires: [Creneau]
     @ObservedObject var viewModel: ContentCalendarViewModel // Passer le viewModel partagé
@@ -231,12 +238,14 @@ struct SectionView: View {
     @State private var selectedCreneauId: Int? // Stocker l'ID du créneau sélectionné
     @State private var selectedCreneauDetails: String = "" // Stocker l'ID du créneau sélectionné
     @State private var selectedZoneId: Int? // Stocker l'ID du créneau sélectionné
+    @State private var showAlert : Bool = false;
 
     
     @State private var selectedSlot = [(Int, Int)]()
     @State private var chooseJeuZone = false
     @State private var i = 0
-
+    @EnvironmentObject var userSettings: UserSettings
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(title)
@@ -264,13 +273,31 @@ struct SectionView: View {
                             let postId = post.id
                             VStack(alignment: .leading, spacing: 8) {
                                 Text(post.nom_post)
-                                let horaireId = creneau.id // Récupérer l'ID du créneau ici
-                                let zoneId = 0 // Remplacer 0 par l'ID de la zone appropriée
+                                    .fontWeight(.semibold)
+                                let horaireId = creneau.id
+                                let zoneId = 0
 
                                 let demandeCount = viewModel.tabPostHoraire[postId]?[horaireId-1].count ?? 0
                                 let maxCount = viewModel.tabPostNbMax[postId]?[horaireId] ?? 0
                                 let ratio = maxCount > 0 ? Double(demandeCount) / Double(maxCount) : 0.0
-                                let fillColor: Color = ratio > 0.75 ? .red : (ratio > 0.5 ? .orange : .green)
+                                let colors: Color = {
+                                    switch ratio {
+                                    case 0.0 :
+                                        return Color.white
+                                    case ..<0.25:
+                                        return Color.green
+                                    case 0.25..<0.50:
+                                        return Color.yellow
+                                    case 0.50..<0.75:
+                                        return Color.orange
+                                    case 0.75...:
+                                        return Color.red
+                                    default:
+                                        return Color.white
+
+                                    }
+                                }()
+                                let fillColor: Color = colors
 
                                 if post.nom_post == "Animation jeux" {
                                     Button(action: {
@@ -279,19 +306,31 @@ struct SectionView: View {
                                         Text("\(demandeCount)/\(maxCount)")
                                             .frame(maxWidth: .infinity)
                                             .padding(8)
-                                            .background(fillColor.opacity(0.5))
+                                            .background(fillColor.opacity(0.3))
                                             .cornerRadius(8)
+                                            .padding(.horizontal, 30)
+                                            .foregroundColor(Color.black)
                                     }
                                 }
                                 else {
                                     Button(action: {
-                                        selectedPost = post
+                                        if (userSettings.user == nil) {
+                                            showAlert = true
+                                        }
+                                        else {
+                                            selectedPost = post
+                                        }
                                     }) {
                                         Text("\(demandeCount)/\(maxCount)")
                                             .frame(maxWidth: .infinity)
                                             .padding(8)
-                                            .background(fillColor.opacity(0.5))
+                                            .background(fillColor.opacity(0.3))
                                             .cornerRadius(8)
+                                            .padding(.horizontal, 30)
+                                            .foregroundColor(Color.black)
+                                    }
+                                    .alert(isPresented: $showAlert) {
+                                        Alert(title: Text("Connectez-vous"), message: Text("Vous devez être connecté pour vous inscrire."), dismissButton: .default(Text("OK")))
                                     }
                                 }
                             }
@@ -315,5 +354,3 @@ struct SectionView: View {
 #Preview {
     CalendarView()
 }
-
-
