@@ -9,11 +9,11 @@ import Foundation
 
 struct User: Codable {
     let id: Int
-    let nom: String
-    let prenom: String
+    var nom: String
+    var prenom: String
     let email: String
     let numero_tel: String?  // Déclarer comme optionnel
-    let pseudo: String
+    var pseudo: String
     let biographie: String?
     let role: String?
     let password: String

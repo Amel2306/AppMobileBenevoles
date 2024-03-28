@@ -1,5 +1,6 @@
 import SwiftUI
 
+
 struct UserDetailsView: View {
     @EnvironmentObject var userSettings: UserSettings
     @State private var demandesEnAttente: [DemanderActivite] = []
@@ -9,25 +10,33 @@ struct UserDetailsView: View {
     @State private var zoneBenevoleNames: [Int: String] = [:]
     @State private var creneauDate:  [Int: String] = [:]
     @State private var creneauHoraires:  [Int: String] = [:]
+    //++
+    @State private var isPresentingEditView = false
 
+    
+    static var emptyUser: User {
+        User(id: 1 , nom: "", prenom : "", email: "", numero_tel: "", pseudo: "",biographie: "", role: "", password: "",cherche_hebergement: 0,propose_hebergement: "",taille: "",association_id:"",createdAt: "",updatedAt: "")
+        }
 
     
     
     var body: some View {
-
-        ScrollView {
+        
+        NavigationView {
+            ScrollView{
             VStack {
-                Text("Bienvenue, \(userSettings.user?.prenom ?? "")")
-                    .font(.title)
-                    .fontWeight(.bold)
-                    .padding()
-                
-                Image(systemName: "person")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 70, height: 70)
-                    .padding()
-                
+                Group{
+                    Text("Bienvenue, \(userSettings.user?.prenom ?? "")")
+                        .font(.title)
+                        .fontWeight(.bold)
+                        .padding()
+                    
+                    Image(systemName: "person")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 70, height: 70)
+                        .padding()
+                }
                 
                 Group {
                     Divider()
@@ -45,10 +54,10 @@ struct UserDetailsView: View {
                         Text("\(userSettings.user?.prenom ?? "Entrez votre prénom")")
                     }
                     Divider()
-
+                    
                 }
                 .padding(.horizontal)
-
+                
                 
                 Group{
                     HStack{
@@ -68,7 +77,7 @@ struct UserDetailsView: View {
                     Divider()
                 }
                 .padding(.horizontal)
-
+                
                 Group{
                     HStack{
                         Text("Biographie ")
@@ -86,7 +95,7 @@ struct UserDetailsView: View {
                     Divider()
                 }
                 .padding(.horizontal)
-
+                
                 
                 Group{
                     HStack{
@@ -105,15 +114,17 @@ struct UserDetailsView: View {
                     Divider()
                 }
                 .padding(.horizontal)
-
-
-
+                
+                
+                
+                
+                
                 // Liste des demandes en attente
                 if !demandesEnAttente.isEmpty {
                     Section {
                         Text("Mes demandes en attente")
                             .font(.headline)
-
+                        
                         ForEach(demandesEnAttente, id: \.id) { demande in
                             VStack (alignment: .leading){
                                 HStack{
@@ -136,15 +147,15 @@ struct UserDetailsView: View {
                             }
                             .padding()
                             .foregroundColor(.black)
-
+                            
                         }
                         .frame(width: 380, height: 60)
                         .background(Color(hex: "4A4BA8").opacity(0.4))
                         .cornerRadius(10)
-
+                        
                     }
                 }
-
+                
                 // Liste des demandes acceptées
                 if !demandesAcceptees.isEmpty {
                     Section {
@@ -177,65 +188,68 @@ struct UserDetailsView: View {
                         .frame(width: 380, height: 60)
                         .background(Color(hex: "7BC42F").opacity(0.4))
                         .cornerRadius(10)
-
-
-                    }
-
-                }
-
-                // Boutons pour afficher plus ou moins de demandes acceptées
-                HStack {
-                    Spacer()
-                    Button(action: {
-                        nombreDemandesAffichees += 5
-                    }) {
-                        Label("",systemImage: "plus.circle")
+                        
+                        
                     }
                     
-                    Button(action: {
-                        nombreDemandesAffichees = max(nombreDemandesAffichees - 5, 5)
-                    }) {
-                        Label("",systemImage:"minus.circle")
-                    }
                 }
-            
-                
-            // Liste des demandes refusées
-            if !demandesRefusees.isEmpty {
-                Section {
-                    Text("Mes demandes refusées")
-                        .font(.headline)
-
-                    ForEach(demandesRefusees, id: \.id) { demande in
-                        VStack(alignment: .leading) {
-                            HStack{
-                                Text("Numéro de la demande:  \(demande.id)")
-                                    .font(.headline)
-                                Spacer()
-                                Text("Refusée")
-                                    .italic()
-                            }
-                            HStack {
-                                Label("\(creneauDate[demande.creneau_id] ?? "")", systemImage: "calendar")
-                                Spacer()
-                                Label("\(creneauHoraires[demande.creneau_id] ?? "")", systemImage: "clock")
-                                    .labelStyle(.trailingIcon)
-                            }
-                            .font(.caption)
-                            
-                            Label("\(zoneBenevoleNames[demande.zonebenevole_id] ?? "")", systemImage:"mappin.and.ellipse")
-                                .font(.caption)
+                Group{
+                    // Boutons pour afficher plus ou moins de demandes acceptées
+                    HStack {
+                        Spacer()
+                        Button(action: {
+                            nombreDemandesAffichees += 5
+                        }) {
+                            Label("",systemImage: "plus.circle")
                         }
-                        .padding()
-                        .foregroundColor(.black)
+                        
+                        Button(action: {
+                            nombreDemandesAffichees = max(nombreDemandesAffichees - 5, 5)
+                        }) {
+                            Label("",systemImage:"minus.circle")
+                        }
                     }
-                    .frame(width: 380, height: 60)
-                    .background(Color(hex: "C37EC9").opacity(0.4))
-                    .cornerRadius(10)
-
                 }
-            }
-
+                
+                
+                // Liste des demandes refusées
+                if (!demandesRefusees.isEmpty) {
+                    Section {
+                        Text("Mes demandes refusées")
+                            .font(.headline)
+                        
+                        ForEach(demandesRefusees, id: \.id) { demande in
+                            VStack(alignment: .leading) {
+                                HStack{
+                                    Text("Numéro de la demande:  \(demande.id)")
+                                        .font(.headline)
+                                    Spacer()
+                                    Text("Refusée")
+                                        .italic()
+                                }
+                                HStack {
+                                    Label("\(creneauDate[demande.creneau_id] ?? "")", systemImage: "calendar")
+                                    Spacer()
+                                    Label("\(creneauHoraires[demande.creneau_id] ?? "")", systemImage: "clock")
+                                        .labelStyle(.trailingIcon)
+                                }
+                                .font(.caption)
+                                
+                                Label("\(zoneBenevoleNames[demande.zonebenevole_id] ?? "")", systemImage:"mappin.and.ellipse")
+                                    .font(.caption)
+                            }
+                            .padding()
+                            .foregroundColor(.black)
+                        }
+                        .frame(width: 380, height: 60)
+                        .background(Color(hex: "C37EC9").opacity(0.4))
+                        .cornerRadius(10)
+                        
+                    }
+                    
+                    
+                }
+                
             }
             .navigationBarTitle("Profil")
             .onAppear {
@@ -243,7 +257,32 @@ struct UserDetailsView: View {
                 fetchZoneBenevoleNames()
                 fetchCreneauDetails()
             }
+            .toolbar {
+                Button("Modifier") {
+                    isPresentingEditView = true
+                }
+            }
+            .sheet(isPresented: $isPresentingEditView) {
+                NavigationStack {
+                    UserEditView()
+                        .navigationTitle("Modifier le profil")
+                        .toolbar {
+                            ToolbarItem(placement: .cancellationAction) {
+                                Button("Annuler") {
+                                    isPresentingEditView = false
+                                }
+                            }
+                            ToolbarItem(placement: .confirmationAction) {
+                                Button("Valider") {
+                                    isPresentingEditView = false
+                                }
+                            }
+                        }
+
+                }
+            }
         }
+    }
     }
 
     func fetchDemandesActivite() {
@@ -336,4 +375,7 @@ func fetchZoneBenevoleNames() {
             }.resume()
         }
        }
+   
 }
+
+

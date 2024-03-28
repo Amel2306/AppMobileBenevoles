@@ -1,25 +1,29 @@
-import Foundation
 import SwiftUI
 import Combine
 
-// Vue pour afficher la liste des posts
 struct PostsListView: View {
     @StateObject private var viewModel = PostsListViewModel()
 
     var body: some View {
         NavigationView {
-            List(viewModel.posts) { post in
-                NavigationLink(destination: PostDetailsView(post: post)) {
-                    Text(post.nom_post)
+            VStack {
+                List(viewModel.posts) { post in
+                    NavigationLink(destination: PostDetailsView(post: post)) {
+                        Text(post.nom_post)
+                            .frame(maxWidth: .infinity)
+                            .cornerRadius(20)
+                            .background(Color.white)
+                    }
                 }
             }
-            .navigationTitle("Liste des Posts")
+            .navigationTitle("Liste des Postes")
         }
         .onAppear {
             viewModel.fetchPosts()
         }
     }
 }
+
 
 // ViewModel pour récupérer les données des posts
 class PostsListViewModel: ObservableObject {

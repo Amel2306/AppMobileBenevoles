@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		14117CA52BB5B12300F949C8 /* UserEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14117CA42BB5B12300F949C8 /* UserEditView.swift */; };
 		1485D23F2BAF788900DC4C22 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1485D23E2BAF788900DC4C22 /* CalendarView.swift */; };
 		1485D2462BB2F7BD00DC4C22 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1485D2452BB2F7BD00DC4C22 /* Color.swift */; };
 		1485D2482BB2F81200DC4C22 /* TrailingIconLabelStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1485D2472BB2F81200DC4C22 /* TrailingIconLabelStyle.swift */; };
@@ -38,6 +39,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		14117CA42BB5B12300F949C8 /* UserEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEditView.swift; sourceTree = "<group>"; };
 		1485D23E2BAF788900DC4C22 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		1485D2452BB2F7BD00DC4C22 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		1485D2472BB2F81200DC4C22 /* TrailingIconLabelStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailingIconLabelStyle.swift; sourceTree = "<group>"; };
@@ -92,6 +94,7 @@
 			isa = PBXGroup;
 			children = (
 				14CF98702BA9D4C400551B00 /* UserSettings.swift */,
+				14117CA42BB5B12300F949C8 /* UserEditView.swift */,
 				14C563982BA19AC300E17F09 /* UserDetailsView.swift */,
 			);
 			path = User;
@@ -287,6 +290,7 @@
 				14C5638A2BA0922A00E17F09 /* ContentView.swift in Sources */,
 				14CF987D2BA9E18500551B00 /* CreneauEspace.swift in Sources */,
 				14C563992BA19AC300E17F09 /* UserDetailsView.swift in Sources */,
+				14117CA52BB5B12300F949C8 /* UserEditView.swift in Sources */,
 				14CF987F2BA9E29C00551B00 /* DemandeActivite.swift in Sources */,
 				148C42212BAF0BB600E272C5 /* Game.swift in Sources */,
 				14CF98792BA9DE9700551B00 /* Festival.swift in Sources */,
@@ -432,6 +436,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"appMobileBenevoles/Preview Content\"";
+				DEVELOPMENT_TEAM = 54N94WZYTP;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -460,6 +465,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"appMobileBenevoles/Preview Content\"";
+				DEVELOPMENT_TEAM = 54N94WZYTP;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
