@@ -1,19 +1,3 @@
-//
-//  SignupView.swift
-//  appMobileBenevoles
-//
-//  Created by Amel  on 19/03/2024.
-//
-
-import Foundation
-
-//
-//  LoginView.swift
-//  appMobileBenevoles
-//
-//  Created by Amel  on 18/03/2024.
-//
-
 import Foundation
 
 import SwiftUI
@@ -42,6 +26,10 @@ struct SignUpView : View {
      NavigationView {
          ScrollView {
              VStack {
+                 Image("logoew")
+                     .resizable()
+                     .aspectRatio(contentMode: .fit)
+                     .frame(width: 200, height: 200)
                  Text("Inscription")
                      .font(.largeTitle)
                      .bold()
@@ -72,30 +60,52 @@ struct SignUpView : View {
                      .background(Color.black.opacity(0.05))
                      .cornerRadius(10)
                  
-                 SecureField("Password", text: $password)
+                 SecureField("Mot de passe", text: $password)
                      .padding()
                      .frame(width: 300, height: 50)
                      .background(Color.black.opacity(0.05))
                      .cornerRadius(10)
                  
-                 Button("Inscription") {
+                 Button {
                      let requestBody = ["nom": nom, "prenom": prenom, "pseudo": pseudo, "email": email.lowercased(), "password": password]
                      
                      print(requestBody)
                      
                      authenticateUser(requestBody: requestBody)
                      }
+             label: {
+                Text("S'inscrire")
+                    .fontWeight(.bold)
+            }
                  .foregroundColor(.white)
                  .frame(width: 300, height: 50)
-                 .background(Color.green)
-                 .cornerRadius(10)
+                 .background(LinearGradient(colors: [.purple, .green], startPoint: .topLeading, endPoint: .bottomTrailing))
+                .cornerRadius(10)
                  
                  NavigationLink(destination: UserDetailsView(), isActive: $showingLoginScreen) {
                      EmptyView()
                  }
+                 
+                 Circle()
+                             .fill(LinearGradient(gradient: Gradient(colors: [Color.green, Color.white]), startPoint: .topLeading, endPoint: .bottomTrailing))
+                             .frame(width: 400, height: 400)
+                             .opacity(0.9)
+                             .offset(y: 50)
+                 
+                 
              }
          }
+         .background(
+             LinearGradient(
+                 gradient: Gradient(colors: [Color.purple, Color.green]),
+                 startPoint: .topLeading,
+                 endPoint: .bottomTrailing
+             )
+             .opacity(0.20)
+         )
+         
      }
+     
      
  }
  
