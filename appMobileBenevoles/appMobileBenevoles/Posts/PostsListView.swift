@@ -15,6 +15,20 @@ struct PostsListView: View {
                             .background(Color.white)
                     }
                 }
+                /*Button(action: {
+                    viewModel.fetchPosts()
+                }) {
+                    Text("Actualiser")
+                        .fontWeight(.bold)
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(LinearGradient(gradient: Gradient(colors: [Color.purple, Color.green]), startPoint: .leading, endPoint: .trailing)
+                        )
+                        .cornerRadius(8)
+                        .shadow(radius: 3)
+                }
+                .padding()
+                 */
             }
             .navigationTitle("Liste des Postes")
         }
