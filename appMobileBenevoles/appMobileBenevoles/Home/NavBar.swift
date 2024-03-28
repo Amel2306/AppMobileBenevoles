@@ -74,25 +74,36 @@ struct PostAndJeuxView: View {
                 showInfos = true
                 selectedTab = SelectedTab(item: "infos")
             }) {
-                Text("Information Post")
+                Text("Informations Activité")
                     .padding()
-                    .foregroundColor(.white)
-                    .background(Color.blue)
+                    .foregroundColor(.black)
+                    .fontWeight(.bold)
+                    .frame(width: 300, height: 50)
+                    .background(Color.green
+                        .opacity(0.5))
                     .cornerRadius(8)
             }
             Button(action: {
                 showInfos = false // Assurez-vous de réinitialiser la variable lorsque vous changez d'onglet
                 selectedTab = SelectedTab(item: "jeux")
             }) {
-                Text("Jeux")
+                Text("Informations Jeux")
                     .padding()
-                    .foregroundColor(.white)
-                    .background(Color.blue)
+                    .foregroundColor(.black)
+                    .fontWeight(.bold)
+                    .frame(width: 300, height: 50)
+                    .background(Color.purple
+                        .opacity(0.5))
                     .cornerRadius(8)
             }
+            Circle()
+                        .fill(LinearGradient(gradient: Gradient(colors: [Color.purple, Color.green]), startPoint: .topLeading, endPoint: .bottomTrailing))
+                        .frame(width: 400, height: 400)
+                        .opacity(0.4)
+                        .offset(y: 300)
         }
         .sheet(item: $selectedTab) { selected in
-            NavigationView { // Utilisez NavigationView pour obtenir un bouton de retour automatique
+            NavigationView {
                 if selected.item == "infos" {
                     PostsListView()
                 } else {
