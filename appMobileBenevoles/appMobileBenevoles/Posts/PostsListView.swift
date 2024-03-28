@@ -1,4 +1,3 @@
-import Foundation
 import SwiftUI
 import Combine
 
@@ -8,10 +7,29 @@ struct PostsListView: View {
 
     var body: some View {
         NavigationView {
-            List(viewModel.posts) { post in
-                NavigationLink(destination: PostDetailsView(post: post)) {
-                    Text(post.nom_post)
+            VStack {
+                List(viewModel.posts) { post in
+                    NavigationLink(destination: PostDetailsView(post: post)) {
+                        Text(post.nom_post)
+                            .frame(maxWidth: .infinity)
+                            .cornerRadius(20)
+                            .background(Color.white)
+                    }
                 }
+                /*Button(action: {
+                    viewModel.fetchPosts()
+                }) {
+                    Text("Actualiser")
+                        .fontWeight(.bold)
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(LinearGradient(gradient: Gradient(colors: [Color.purple, Color.green]), startPoint: .leading, endPoint: .trailing)
+                        )
+                        .cornerRadius(8)
+                        .shadow(radius: 3)
+                }
+                .padding()
+                 */
             }
             .navigationTitle("Liste des Posts")
         }
@@ -20,6 +38,7 @@ struct PostsListView: View {
         }
     }
 }
+
 
 // ViewModel pour récupérer les données des posts
 class PostsListViewModel: ObservableObject {
@@ -41,3 +60,35 @@ class PostsListViewModel: ObservableObject {
             .store(in: &cancellables)
     }
 }
+
+struct PostDetailsView: View {
+    let post: Post
+
+    var body: some View {
+        VStack {
+            Text(post.description)
+                .padding()
+                .foregroundColor(.black)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                .background(
+                    LinearGradient(
+                        gradient: Gradient(colors: [Color.purple, Color.green]),
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                    .opacity(0.20)
+                    .edgesIgnoringSafeArea(.all)
+                )
+            Spacer()
+        }
+        .navigationTitle("Informations \(post.nom_post)")
+    }
+}
+
+
+struct Posts_Previews: PreviewProvider {
+    static var previews: some View {
+        PostsListView()
+    }
+}
+
